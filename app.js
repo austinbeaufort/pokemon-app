@@ -1,17 +1,7 @@
+
 let button = document.querySelector('.button');
 
-button.addEventListener('click', function() {
-    button.style.backgroundImage = "url('https://i.ibb.co/MpjLY91/pokemon.jpg')";
-})
-
-button.addEventListener('mouseenter', function() {
-    button.style.backgroundImage = "url('https://cdn.shopify.com/s/files/1/2274/3743/products/1.jpg?v=1511107894')";
-})
-
-button.addEventListener('mouseleave', function() {
-    button.style.backgroundImage = "url('https://i.ibb.co/MpjLY91/pokemon.jpg')";
-})
-
+// START CALL TO API
 button.addEventListener('click', function() {
     
     let xhr = new XMLHttpRequest();
@@ -27,15 +17,27 @@ button.addEventListener('click', function() {
     
     xhr.send();
 });
+// END CALL TO API
 
 
 
 function loaded(pokeData) {
+    // name
     let name = document.querySelector('.name');
     name.innerHTML = pokeData.species.name;
 
+    // type
     let type = document.querySelector('.type');
     let typeName = pokeData.types["0"].type.name;
+    type.innerHTML = `Type: ${typeName} pokemon`;
+
+    // images
+    document.querySelector('.image').src = pokeData.sprites.front_default;
+    document.querySelector('.image2').src = pokeData.sprites.back_default;
+    document.querySelector('.image3').src = pokeData.sprites.front_shiny;
+    document.querySelector('.image4').src = pokeData.sprites.back_shiny;
+
+    // background changes
     switch(typeName) {
         case 'fire': 
             document.body.style.background = 'red';
@@ -106,10 +108,20 @@ function loaded(pokeData) {
             document.body.style.background = 'white';
             break;
         }
-    type.innerHTML = `Type: ${typeName} pokemon`;
-    document.querySelector('.image').src = pokeData.sprites.front_default;
-    document.querySelector('.image2').src = pokeData.sprites.back_default;
-    document.querySelector('.image3').src = pokeData.sprites.front_shiny;
-    document.querySelector('.image4').src = pokeData.sprites.back_shiny;
 
 }
+
+
+// START KEEPS BUTTON BACKGROUND IMAGE CONSISTENT
+button.addEventListener('click', function() {
+    button.style.backgroundImage = "url('https://i.ibb.co/MpjLY91/pokemon.jpg')";
+})
+
+button.addEventListener('mouseenter', function() {
+    button.style.backgroundImage = "url('https://cdn.shopify.com/s/files/1/2274/3743/products/1.jpg?v=1511107894')";
+})
+
+button.addEventListener('mouseleave', function() {
+    button.style.backgroundImage = "url('https://i.ibb.co/MpjLY91/pokemon.jpg')";
+})
+// END KEEP BUTTON BACKGROUND IMAGE CONSISTENT
